@@ -1,0 +1,18 @@
+{
+  "company_name": "Falcon Trading DMCC, demo only",
+  "vat_declared_supplies": "18200000",
+  "reverse_charge_context": "1200000",
+  "total_reconciling_items": "-650000",
+  "bridge_target": "17550000",
+  "accounting_revenue": "17640000",
+  "residual": "90000",
+  "materiality": "88200.000",
+  "bridge_status": "FAIL",
+  "score_label": "Medium exception load",
+  "filing_deadline": "2026-09-30",
+  "top_exception_drivers": [
+    "Residual unexplained difference vs materiality",
+    "Validation check failures or warnings",
+    "Days to filing deadline"
+  ]
+}
