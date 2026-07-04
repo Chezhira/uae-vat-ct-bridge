@@ -97,7 +97,7 @@ This tool provides an arithmetic self-check for internal preparation purposes on
 
 - MVP uses a simple P&L summary, not a full trial balance.
 - Reconciling items are manually entered or uploaded.
-- QFZP, Small Business Relief, WPS, related-party, transfer-pricing, and Odoo checks are out of scope.
+- QFZP, Small Business Relief, related-party, transfer-pricing, and Odoo checks are out of scope.
 - Rules are stamped as verified on 2026-07-04 and should be refreshed before reliance.
 
 ## Roadmap
@@ -109,7 +109,6 @@ This tool provides an arithmetic self-check for internal preparation purposes on
 - Carefully worded QFZP advisory note.
 - Small Business Relief consistency note.
 - Related-party transaction schedule upload.
-- WPS payroll/headcount context check.
 - Better PDF styling.
 - Odoo export template compatibility.
 
