@@ -48,11 +48,17 @@ def _build_reportlab_pdf(inputs: BridgeInputs, findings: BridgeFindings) -> byte
     check_rows = [["Check", "Status", "Message"]] + [[c.title, c.status, c.message] for c in findings.checks]
     story.append(Table(check_rows, repeatRows=1, colWidths=[120, 55, 260], style=_table_style()))
     story.extend([Spacer(1, 12), Paragraph("Reconciling Items", styles["Heading2"])])
+    recon_cell_style = _recon_cell_style(styles)
     recon_rows = [["Category", "Description", "Amount", "Evidence"]] + [
-        [item.category, _safe(item.description), _money(item.amount), _safe(item.evidence_ref)]
+        [
+            _paragraph_cell(item.category, recon_cell_style),
+            _paragraph_cell(item.description, recon_cell_style),
+            _money(item.amount),
+            _paragraph_cell(item.evidence_ref, recon_cell_style),
+        ]
         for item in inputs.reconciling_items
     ]
-    story.append(Table(recon_rows, repeatRows=1, colWidths=[120, 160, 75, 115], style=_table_style()))
+    story.append(Table(recon_rows, repeatRows=1, colWidths=[76, 195, 82, 98], style=_recon_table_style()))
     story.extend(
         [
             Spacer(1, 12),
@@ -85,6 +91,20 @@ def _safe(value: str) -> str:
     return escape(value or "")
 
 
+def _paragraph_cell(value: str, style):
+    from reportlab.platypus import Paragraph
+
+    return Paragraph(_safe(value), style)
+
+
+def _recon_cell_style(styles):
+    style = styles["BodyText"].clone("ReconcilingItemCell")
+    style.fontSize = 7.2
+    style.leading = 8.4
+    style.wordWrap = "CJK"
+    return style
+
+
 def _table_style():
     from reportlab.lib import colors
     from reportlab.platypus import TableStyle
@@ -98,6 +118,18 @@ def _table_style():
             ("FONTSIZE", (0, 0), (-1, -1), 8),
         ]
     )
+
+
+def _recon_table_style():
+    style = _table_style()
+    style.add("FONTSIZE", (0, 1), (-1, -1), 7.2)
+    style.add("LEADING", (0, 1), (-1, -1), 8.4)
+    style.add("ALIGN", (2, 1), (2, -1), "RIGHT")
+    style.add("LEFTPADDING", (0, 0), (-1, -1), 4)
+    style.add("RIGHTPADDING", (0, 0), (-1, -1), 4)
+    style.add("TOPPADDING", (0, 0), (-1, -1), 4)
+    style.add("BOTTOMPADDING", (0, 0), (-1, -1), 4)
+    return style
 
 
 def _build_basic_pdf(inputs: BridgeInputs, findings: BridgeFindings) -> bytes:
