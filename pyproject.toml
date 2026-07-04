@@ -31,7 +31,6 @@ packages = ["engine"]
 
 [tool.coverage.run]
 source = ["engine"]
-data_file = "${TEMP}/uae-vat-ct-bridge.coverage"
 
 [tool.coverage.report]
 fail_under = 80
