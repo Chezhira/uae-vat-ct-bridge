@@ -68,7 +68,8 @@ def _build_reportlab_pdf(inputs: BridgeInputs, findings: BridgeFindings) -> byte
             Paragraph("Known Limitations", styles["Heading2"]),
             Paragraph(
                 "This MVP does not compute tax liability, validate legal tax positions, connect to EmaraTax, "
-                "or assess FTA audit selection. It depends on the completeness and quality of user-provided data.",
+                "or provide official filing assurance. It depends on the completeness and quality of "
+                "user-provided data.",
                 styles["BodyText"],
             ),
             Spacer(1, 12),
