@@ -1,6 +1,10 @@
 # UAE VAT-to-CT Bridge
 
-UAE VAT-to-CT Bridge is a Streamlit-based arithmetic self-check that reconciles VAT-declared supplies to accounting revenue used in Corporate Tax preparation. It is designed as an internal finance working paper tool and portfolio demo. It is not a filing tool, tax advice, or an official FTA product.
+UAE VAT-to-CT Bridge is a Streamlit-based arithmetic self-check that reconciles VAT-declared supplies to accounting revenue used in UAE Corporate Tax preparation. It is designed as an internal finance working paper and portfolio demo, not as a filing product, tax advice tool, or official UAE Federal Tax Authority service.
+
+## Why It Exists
+
+Finance teams preparing UAE Corporate Tax often need to explain why VAT-declared supplies do or do not tie to accounting revenue. Timing differences, asset disposals, credit notes, reverse-charge context, and other reconciling items can create a gap. This tool turns that gap into a documented pre-filing bridge so finance teams can identify unexplained differences before finalising filing work.
 
 ## What It Does
 
@@ -10,73 +14,65 @@ UAE VAT-to-CT Bridge is a Streamlit-based arithmetic self-check that reconciles 
 - Shows residual unexplained difference, materiality, checks, and a pre-filing exception score.
 - Exports an Excel working paper and a PDF bridge report.
 
-## UAE Pre-Filing Reconciliation Problem
-
-Finance teams preparing UAE Corporate Tax often need to explain why VAT-declared supplies do or do not tie to accounting revenue used in CT preparation. Timing differences, asset disposals, reverse-charge context, credit notes, and other reconciling items can create a gap. This tool turns that gap into a documented arithmetic bridge before filing work is finalised.
-
 ## What It Does Not Do
 
 - It does not calculate CT liability.
 - It does not prepare or submit VAT or CT filings.
-- It does not predict FTA audit risk.
+- It does not predict FTA action.
 - It does not replicate EmaraTax or FTA systems.
 - It does not provide tax advice or confirm VAT/CT treatment.
 
 ## Screenshots
 
-Release screenshots belong under `docs/screenshots/` and must use only the synthetic demo dataset. The screenshot checklist is committed in `docs/screenshots/README.md`; the first `v0.1.0` tag should wait until those images are captured from the local or deployed app.
-
 ![Landing page](docs/screenshots/01-landing-page.png)
 
-![Upload and demo load screen](docs/screenshots/02-upload-demo-load.png)
+![Demo input workflow](docs/screenshots/02-demo-inputs.png)
 
-![Bridge results dashboard](docs/screenshots/03-bridge-results-dashboard.png)
+![Bridge results dashboard](docs/screenshots/03-bridge-dashboard.png)
 
-![Exception score and checks table](docs/screenshots/04-exception-score-checks.png)
+![Exception drivers and checks](docs/screenshots/04-exception-drivers-checks.png)
 
-![Excel export preview](docs/screenshots/05-excel-export-preview.png)
-
-![PDF report preview](docs/screenshots/06-pdf-report-preview.png)
+![Export previews](docs/screenshots/05-export-previews.png)
 
 ## Demo Dataset
 
-The committed demo dataset uses synthetic data for `Falcon Trading DMCC, demo only`. It has quarterly FY2025 VAT periods, VAT-declared supplies of approximately AED 18.2 million, RCM context of AED 1.2 million, documented reconciling items of AED 650,000, and a deliberate AED 90,000 residual unexplained difference.
+The committed demo dataset uses synthetic data for `Falcon Trading DMCC, demo only`. It includes quarterly FY2025 VAT periods, VAT-declared supplies of approximately AED 18.2 million, RCM context of AED 1.2 million, documented reconciling items of AED 650,000, and a deliberate AED 90,000 residual unexplained difference.
 
 ## Local Setup
 
-```bash
+```powershell
 python -m venv .venv
-.venv\Scripts\activate
-pip install -e ".[dev]"
+.\.venv\Scripts\activate
+python -m pip install -e ".[dev]"
 ```
 
 ## Run The App
 
-```bash
-streamlit run app.py
+```powershell
+python -m streamlit run app.py
 ```
 
-or:
+or, for a fixed local port:
 
-```bash
+```powershell
 python -m streamlit run app.py --server.port 8501 --server.headless true
 ```
 
-## Test Commands
+## Validation Commands
 
-```bash
-ruff check --no-cache .
-ruff format --no-cache .
-pytest
-pytest --cov=engine --cov-report=term-missing
+```powershell
+python -m ruff check --no-cache .
+python -m ruff format --check --no-cache .
+python -m pytest
+python -m pytest --cov=engine --cov-report=term-missing
 python -m engine.demo_run
 ```
 
-## Data Privacy
+## Privacy And Data Handling
 
 The app processes uploaded files in memory during the Streamlit session. It does not intentionally store uploaded files, parsed user data, analytics payloads, or generated user reports in the repository. Generated Excel and PDF exports are assembled in memory for the active download flow. Demo data is synthetic.
 
-## Security Hygiene
+## Security Notes
 
 - Uploads are limited to `.csv` and `.xlsx`.
 - `.xlsm` files are rejected.
@@ -87,16 +83,11 @@ The app processes uploaded files in memory during the Streamlit session. It does
 
 ## CI
 
-GitHub Actions runs on push and pull request:
+GitHub Actions runs linting, formatting checks, engine tests with coverage, and the headless demo smoke test on push and pull request. Engine coverage is configured to fail below 80 percent.
 
-```bash
-ruff check --no-cache .
-ruff format --check --no-cache .
-pytest --cov=engine --cov-report=term-missing
-python -m engine.demo_run
-```
+## Project Status
 
-Coverage is configured to fail below 80 percent for the `engine/` package.
+MVP polish is in progress. The engine vertical slice, demo dataset, exports, UI, CI workflow, and screenshots are present. Release tagging is intentionally held until the public README and screenshots have been reviewed in GitHub.
 
 ## Tax Advice Disclaimer
 
@@ -121,10 +112,6 @@ This tool provides an arithmetic self-check for internal preparation purposes on
 - WPS payroll/headcount context check.
 - Better PDF styling.
 - Odoo export template compatibility.
-
-## Release Checklist
-
-Do not tag `v0.1.0` until CI is green, engine coverage is at least 80 percent, the demo smoke test and golden-file test pass, README and screenshots are complete, Excel and PDF exports work, the Streamlit app runs locally, the deployed app uses synthetic demo data, disclaimers are visible, and no uploaded data is written to disk except active-session export generation.
 
 ## Licence
 
