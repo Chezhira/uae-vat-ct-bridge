@@ -29,6 +29,9 @@ addopts = "-q -p no:cacheprovider"
 [tool.setuptools]
 packages = ["engine"]
 
+[tool.poetry]
+package-mode = false
+
 [tool.coverage.run]
 source = ["engine"]
 
