@@ -24,7 +24,7 @@ def _build_reportlab_pdf(inputs: BridgeInputs, findings: BridgeFindings) -> byte
     from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table
 
     output = BytesIO()
-    doc = SimpleDocTemplate(output, pagesize=A4, title="UAE VAT-to-CT Bridge Report")
+    doc = SimpleDocTemplate(output, pagesize=A4, title="UAE VAT-to-CT Bridge Report", pageCompression=0)
     styles = getSampleStyleSheet()
     story = [
         Paragraph("UAE VAT-to-CT Bridge Report", styles["Title"]),
